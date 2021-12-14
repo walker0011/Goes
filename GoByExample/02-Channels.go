@@ -33,40 +33,40 @@ func pong(pings <-chan string, pongs chan<- string) {
 	pongs <- msg
 }
 
-func main() {
-	// // 创建channels:                   make (chan val-type)
-	// messages := make(chan string)
+// func main() {
+// 	// // 创建channels:                   make (chan val-type)
+// 	// messages := make(chan string)
 
-	// // send a value into a channel :  channel <-
-	// go func() { messages <- "ping" }()
-	// // receive a value from a channel:<-channel
-	// msg := <-messages
-	// // By default, sends and receives block until both the sender and receiver are ready.
-	// // So that we don't need any other synchronization techs.
-	// fmt.Println(msg)
+// 	// // send a value into a channel :  channel <-
+// 	// go func() { messages <- "ping" }()
+// 	// // receive a value from a channel:<-channel
+// 	// msg := <-messages
+// 	// // By default, sends and receives block until both the sender and receiver are ready.
+// 	// // So that we don't need any other synchronization techs.
+// 	// fmt.Println(msg)
 
-	// 2. buffered channel
-	// messages := make(chan string, 2)
+// 	// 2. buffered channel
+// 	// messages := make(chan string, 2)
 
-	// messages <- "buffered"
-	// messages <- "channel"
+// 	// messages <- "buffered"
+// 	// messages <- "channel"
 
-	// fmt.Println(<-messages)
-	// fmt.Println(<-messages)
+// 	// fmt.Println(<-messages)
+// 	// fmt.Println(<-messages)
 
-	// 3. channel synchronization
-	// done := make(chan bool , 1) // buffered channel
+// 	// 3. channel synchronization
+// 	// done := make(chan bool , 1) // buffered channel
 
-	// go worker(done)
+// 	// go worker(done)
 
-	// // block until we receive a notification from the worker on the channel
-	// <-done
+// 	// // block until we receive a notification from the worker on the channel
+// 	// <-done
 
-	pings := make(chan string, 1)
-	pongs := make(chan string, 1)
+// 	pings := make(chan string, 1)
+// 	pongs := make(chan string, 1)
 
-	ping(pings, "passed message")
-	pong(pings, pongs)
-	fmt.Println(<-pongs)
+// 	ping(pings, "passed message")
+// 	pong(pings, pongs)
+// 	fmt.Println(<-pongs)
 
-}
+// }
