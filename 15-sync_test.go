@@ -12,7 +12,7 @@ func TestCounter(t *testing.T) {
 		counter.Inc()
 		counter.Inc()
 
-		assertCounter(t, counter, 3)
+		assertCounter(t, &counter, 3)
 	})
 
 	t.Run("it runs safely concurrently", func(t *testing.T) {
@@ -30,11 +30,12 @@ func TestCounter(t *testing.T) {
 		}
 
 		wg.Wait()
-		assertCounter(t, counter, wantedCount)
+		assertCounter(t, &counter, wantedCount)
 	})
 }
 
-func assertCounter(t testing.TB, got Counter, want int) {
+// 这里必须是* Counter。因为里面包含Mutex，而“a mutex must not be copyied after first use”
+func assertCounter(t testing.TB, got *Counter, want int) {
 	t.Helper()
 	if got.Value() != want {
 		t.Errorf("got %d, want %d", got.Value(), want)
