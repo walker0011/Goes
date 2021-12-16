@@ -8,24 +8,29 @@ import (
 )
 
 func TestRacer(t *testing.T) {
-	slowServer := makeDelayedServer(20 * time.Millisecond)
-	fastServer := makeDelayedServer(0 * time.Millisecond)
+	t.Run("compares speeds of servers, returning the url of the fastest one", func(t *testing.T) {
+		slowServer := makeDelayedServer(20 * time.Second)
+		fastServer := makeDelayedServer(0 * time.Second)
 
-	// by prefixing a function with "defer", it will call this function
-	// at the end of the containint function
+		// by prefixing a function with "defer", it will call this function
+		// at the end of the containint function
+		defer slowServer.Close()
+		defer fastServer.Close()
 
-	defer slowServer.Close()
-	defer fastServer.Close()
+		slowURL := slowServer.URL
+		fastURL := fastServer.URL
 
-	slowURL := slowServer.URL
-	fastURL := fastServer.URL
+		want := fastURL
+		got, err := Racer(slowURL, fastURL)
 
-	want := fastURL
-	got := Racer(slowURL, fastURL)
+		if err != nil {
+			t.Fatalf("did not expect an error but got one %v", err)
+		}
 
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
 
 }
 
